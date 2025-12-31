@@ -1,7 +1,10 @@
 package net.car.rotbloom;
 
+import net.car.rotbloom.item.ModItems;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.item.ItemGroups;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,5 +23,7 @@ public class Rotbloom implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Do you smell it? The stench of a thousand corpses?");
+		ModItems.registerModItems();
+		ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(ModItems::addItemsToIngredientTabItemGroup);
 	}
 }
