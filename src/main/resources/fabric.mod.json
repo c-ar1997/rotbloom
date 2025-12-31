@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "rotbloom",
+	"version": "${version}",
+	"name": "rotbloom",
+	"description": "Do you smell it? The stench of a thousand corpses?",
+	"authors": [
+		"c_ar - code, baconseye - models & art"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/rotbloom/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.car.rotbloom.Rotbloom"
+		],
+		"client": [
+			"net.car.rotbloom.RotbloomClient"
+		],
+		"fabric-datagen": [
+			"net.car.rotbloom.RotbloomDataGenerator"
+		]
+	},
+	"mixins": [
+		"rotbloom.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.3",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
