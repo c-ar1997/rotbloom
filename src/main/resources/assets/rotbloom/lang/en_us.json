@@ -1,0 +1,22 @@
+{
+  "item.rotbloom.hostile_soul": "Hostile Soul",
+  "item.rotbloom.passive_soul": "Passive Soul",
+  "item.rotbloom.boss_soul": "Boss Soul",
+  "item.rotbloom.rotten_bone": "Rotten Bone",
+  "item.rotbloom.wither_bone": "Wither Bone",
+
+  "item.rotbloom.lesser_harvest": "§6The Lesser Harvest",
+
+  "item.rotbloom.contract": "§6Contract",
+
+  "block.rotbloom.small_husk": "Small Husk",
+
+  "tooltip.rotblossom.lesser_harvest.tooltip": "§8Allows harvesting souls of passive, hostile, and powerful creatures.",
+  "item.contract.tooltip": "§8Binds a person to the contract.",
+  "item.contract.bindedTooltip": "§8Binded to: ",
+
+  "entity.rotbloom.rotling": "Rotling",
+  "entity.rotbloom.chains": "Chains",
+
+  "itemgroup.rotbloom": "Rotbloom"
+}

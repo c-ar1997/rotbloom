@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "rotbloom:block/small_husk",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "rotbloom:block/small_husk"
+    },
+    "facing=west": {
+      "model": "rotbloom:block/small_husk",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "rotbloom:block/small_husk",
+      "y": 270
+    }
+  }
+}

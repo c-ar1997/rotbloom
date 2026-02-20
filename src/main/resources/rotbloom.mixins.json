@@ -1,0 +1,30 @@
+{
+	"required": true,
+	"package": "net.car.rotbloom.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"ExampleMixin"
+	],
+	"client": [
+		"ItemRendererAccessor",
+		"ItemRendererMixin",
+		"ModelLoaderMixin",
+		"AbstractClientPlayerEntityMixin",
+		"ClientCommandSourceMixin",
+		"EntityArgumentTypeMixin",
+		"PlayerEntityMixin",
+		"PlayerListHudMixin",
+		"PlayerManagerMixin",
+		"ServerCommandSourceMixin",
+		"LivingEntityMixin",
+		"ServerPlayerEntityMixin",
+		"KeybindMixin",
+		"BipedEntityModelMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

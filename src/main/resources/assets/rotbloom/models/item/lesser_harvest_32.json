@@ -1,0 +1,39 @@
+{
+	"format_version": "1.9.0",
+	"credit": "Made with Blockbench",
+	"parent": "item/generated",
+	"texture_size": [32, 32],
+	"textures": {
+		"layer0": "rotbloom:item/lesser_harvest_32"
+	},
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [-46.75, -90, 0],
+			"translation": [0, 7, 0],
+			"scale": [1.7, 1.7, 1.7]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [-46.75, 90, 0],
+			"translation": [0, 7, 0],
+			"scale": [1.7, 1.7, 1.7]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -90, 25],
+			"translation": [1, 6, -0.5],
+			"scale": [1.36, 1.36, 1.36]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 90, -25],
+			"translation": [1, 6, -0.5],
+			"scale": [1.36, 1.36, 1.36]
+		},
+		"ground": {
+			"translation": [-6.5, 17.75, 0],
+			"scale": [2, 2, 2]
+		},
+		"fixed": {
+			"translation": [-7, 11.75, -0.5],
+			"scale": [2, 2, 2]
+		}
+	}
+}
