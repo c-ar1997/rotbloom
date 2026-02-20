@@ -82,7 +82,7 @@ public class ContractItem extends Item {
         //}
         //return null;
         if (stack.contains(ModComponents.VICTIM_UUID)) {
-            return stack.getOrDefault(ModComponents.VICTIM_UUID, UUID.fromString(""));
+            return stack.getOrDefault(ModComponents.VICTIM_UUID, null);
         }
         return null;
     }

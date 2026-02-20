@@ -23,7 +23,7 @@ public class ModItems {
     public static final Item WITHER_BONE = registerItem("wither_bone", new Item(new Item.Settings().rarity(Rarity.RARE)));
 
     public static final Item LESSER_HARVEST = registerItem("lesser_harvest",
-            new LesserHarvestItem(ModToolMaterial.HARVEST,9,-3f, new Item.Settings()));
+            new LesserHarvestItem(ModToolMaterial.HARVEST, new Item.Settings()));
 
     public static final Item CONTRACT = registerItem("contract",
             new ContractItem(new Item.Settings().maxCount(1)

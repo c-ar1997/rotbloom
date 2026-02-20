@@ -32,7 +32,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class LesserHarvestItem extends SwordItem {
-    public LesserHarvestItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, Settings settings) {
+
+    public LesserHarvestItem(ToolMaterial toolMaterial, Settings settings) {
         super(toolMaterial, settings);
     }
 
