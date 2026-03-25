@@ -23,12 +23,10 @@ public class ModItems {
     public static final Item WITHER_BONE = registerItem("wither_bone", new Item(new Item.Settings().rarity(Rarity.RARE)));
 
     public static final Item LESSER_HARVEST = registerItem("lesser_harvest",
-            new LesserHarvestItem(ModToolMaterial.HARVEST, new Item.Settings()));
+            new LesserHarvestItem(new Item.Settings().maxCount(1).rarity(Rarity.EPIC)));
 
     public static final Item CONTRACT = registerItem("contract",
-            new ContractItem(new Item.Settings().maxCount(1)
-                    .component(ModComponents.VICTIM_UUID, null)
-                    .component(ModComponents.VICTIM_NAME,"")));
+            new ContractItem(new Item.Settings().maxCount(1)));
 
     private static Item registerItem(String name, Item item){
         return Registry.register(Registries.ITEM, Identifier.of(Rotbloom.MOD_ID, name), item);

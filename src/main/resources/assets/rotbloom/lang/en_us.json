@@ -11,7 +11,8 @@
 
   "block.rotbloom.small_husk": "Small Husk",
 
-  "tooltip.rotblossom.lesser_harvest.tooltip": "§8Allows harvesting souls of passive, hostile, and powerful creatures.",
+  "tooltip.rotblossom.lesser_harvest.tooltip": "§8Allows harvesting souls of passive,",
+  "tooltip.rotblossom.lesser_harvest.tooltip2": "§8hostile, and powerful creatures.",
   "item.contract.tooltip": "§8Binds a person to the contract.",
   "item.contract.bindedTooltip": "§8Binded to: ",
 

@@ -46,6 +46,13 @@ public class RotlingEntity extends TameableEntity implements Angerable {
     }
 
     @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+
+        builder.add(ANGER_TIME, 0);
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (this.getWorld().isClient()) {

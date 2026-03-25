@@ -17,10 +17,13 @@ public class ModEntities {
             Identifier.of(Rotbloom.MOD_ID,"rotling"),
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, RotlingEntity::new).dimensions(EntityDimensions.fixed(0.75f,1.375f)).build());
 
-    public static final EntityType<ChainsEntity> CHAINS = Registry.register(Registries.ENTITY_TYPE,
-            Identifier.of(Rotbloom.MOD_ID,"chains"),
-            FabricEntityTypeBuilder.create(SpawnGroup.AMBIENT, ChainsEntity::new).dimensions(EntityDimensions.fixed(2f,2f)).build());
-
+    public static final EntityType<ChainsEntity> CHAINS =
+            Registry.register(Registries.ENTITY_TYPE,
+                    Identifier.of(Rotbloom.MOD_ID, "chains"),
+                    FabricEntityTypeBuilder.create(SpawnGroup.MISC, ChainsEntity::new)
+                            .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
+                            .build()
+            );
     public static void registerModEntities() {
         Rotbloom.LOGGER.info("registering entities for " + Rotbloom.MOD_ID);
     }

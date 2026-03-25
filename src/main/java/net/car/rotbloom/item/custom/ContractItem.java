@@ -1,36 +1,26 @@
 package net.car.rotbloom.item.custom;
 
-import com.mojang.datafixers.kinds.IdF;
 import net.car.rotbloom.components.ModComponents;
 import net.car.rotbloom.entity.ModEntities;
 import net.car.rotbloom.entity.custom.ChainsEntity;
-import net.car.rotbloom.team.TeamHelper;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.scoreboard.Team;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
-import javax.tools.Tool;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class ContractItem extends Item {
+
     public ContractItem(Settings settings) {
         super(settings);
     }
@@ -38,66 +28,85 @@ public class ContractItem extends Item {
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
-        if (stack.contains(ModComponents.VICTIM_NAME) && stack.contains(ModComponents.VICTIM_UUID)) {
-            user.setStackInHand(hand,setContractNbt(stack,user));
-            return TypedActionResult.success(user.getStackInHand(hand));
+
+        if (!world.isClient) {
+            UUID stored = stack.get(ModComponents.VICTIM_UUID);
+
+            if (stored == null) {
+                setContractNbt(stack, user);
+                user.sendMessage(Text.literal("The Contract has been Signed"), true);
+            }
         }
-        return TypedActionResult.pass(user.getStackInHand(hand));
+
+        return TypedActionResult.success(stack, world.isClient());
     }
 
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
-        if (!user.getWorld().isClient) {
-            if (getVictimUUID(stack).equals(entity.getUuid())) {
-                setSit((ServerPlayerEntity) user,entity);
-            } else if (entity instanceof ChainsEntity) {
-                entity.remove(Entity.RemovalReason.DISCARDED);
-            }
+        if (!(user instanceof ServerPlayerEntity serverPlayer)) {
+            return ActionResult.SUCCESS;
         }
+
+        UUID stored = getVictimUUID(stack);
+
+        if (entity.getVehicle() instanceof ChainsEntity chains) {
+            entity.stopRiding();
+            chains.remove(Entity.RemovalReason.DISCARDED);
+            return ActionResult.SUCCESS;
+        }
+
+        if (stored != null && stored.equals(entity.getUuid())) {
+            setSit(serverPlayer, entity);
+        }
+
         return ActionResult.SUCCESS;
     }
 
-    public static ItemStack setContractNbt(ItemStack stack, PlayerEntity entity) {
-        //stack.getOrCreateNbt().putUuid("VictimUUID", entity.getUuid());
-        //stack.getOrCreateNbt().putString("VictimName", entity.getDisplayName().getString());
+    public static void setContractNbt(ItemStack stack, LivingEntity entity) {
         stack.set(ModComponents.VICTIM_UUID, entity.getUuid());
-        stack.set(ModComponents.VICTIM_NAME, entity.getDisplayName().getString());
-        return stack;
+        stack.set(ModComponents.VICTIM_NAME, entity.getName().getString());
     }
 
-    private void setSit(ServerPlayerEntity plr, LivingEntity entity) {
-        ServerWorld world = plr.getServerWorld();
-        if (entity.canMoveVoluntarily()) {
-            ChainsEntity chains = new ChainsEntity(ModEntities.CHAINS,world);
-            world.spawnEntity(chains);
-            BlockPos pos = entity.getBlockPos();
-            chains.refreshPositionAndAngles(pos,entity.getYaw(),entity.getPitch());
-            entity.startRiding(chains,true);
-        }
+    private void setSit(ServerPlayerEntity player, LivingEntity target) {
+        ServerWorld world = player.getServerWorld();
+
+        if (target.hasVehicle()) return;
+
+        ChainsEntity chains = ModEntities.CHAINS.create(world);
+        if (chains == null) return;
+
+        BlockPos pos = target.getBlockPos();
+
+        chains.refreshPositionAndAngles(
+                pos.getX() + 0.5,
+                pos.getY(),
+                pos.getZ() + 0.5,
+                target.getYaw(),
+                target.getPitch()
+        );
+
+        world.spawnEntity(chains);
+        target.startRiding(chains, true);
     }
 
     public static UUID getVictimUUID(ItemStack stack) {
-        //if(hasNbt(stack)) {
-        //    return stack.getOrCreateNbt().getUuid("VictimUUID");
-        //}
-        //return null;
-        if (stack.contains(ModComponents.VICTIM_UUID)) {
-            return stack.getOrDefault(ModComponents.VICTIM_UUID, null);
-        }
-        return null;
+        return stack.contains(ModComponents.VICTIM_UUID)
+                ? stack.get(ModComponents.VICTIM_UUID)
+                : null;
     }
 
     public static String getVictimName(ItemStack stack) {
-        if (stack.contains(ModComponents.VICTIM_NAME)) {
-            return stack.getOrDefault(ModComponents.VICTIM_NAME,"");
-        }
-        return "";
+        return stack.contains(ModComponents.VICTIM_NAME)
+                ? stack.get(ModComponents.VICTIM_NAME)
+                : "";
     }
 
     @Override
     public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
         tooltip.add(Text.translatable("item.contract.tooltip"));
-        tooltip.add(Text.literal("Binded to: " + getVictimName(stack)).formatted(Formatting.DARK_GRAY));
-        super.appendTooltip(stack, context, tooltip, type);
+
+        String name = getVictimName(stack);
+        tooltip.add(Text.literal(name.isEmpty() ? "Unbound" : "Bound to: " + name)
+                .formatted(Formatting.DARK_GRAY));
     }
 }
